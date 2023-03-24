@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  publish_x86:
+  publish_qemu:
     concurrency: 
       group: ${{ github.ref }}
       cancel-in-progress: true
