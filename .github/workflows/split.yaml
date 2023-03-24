@@ -1,4 +1,4 @@
-name: split
+name: split-operator
 
 on:
   push:
@@ -8,7 +8,7 @@ jobs:
 
   publish_qemu:
     concurrency: 
-      group: ${{ github.ref }}
+      group: ${{ github.ref }}-qemu
       cancel-in-progress: true
     permissions:
       packages: write
@@ -17,8 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
-          repository: alexellis/release-it
+          repository: inlets/inlets-operator
           path: "./"
+
+      - name: Check checked out contents
+        run: |
+          find .
 
       - name: Get Repo Owner
         id: get_repo_owner
@@ -47,5 +51,4 @@ jobs:
             Version=dev
             GitCommit=${{ github.sha }}
           tags: |
-            ghcr.io/${{ env.REPO_OWNER }}/release-it:${{ github.sha }}-qemu
-
+            ghcr.io/${{ env.REPO_OWNER }}/inlets-operator:${{ github.sha }}-qemu
