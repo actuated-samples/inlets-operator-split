@@ -144,3 +144,4 @@ jobs:
 
         echo Pushing manifest
         docker manifest push ghcr.io/${{ env.REPO_OWNER }}/inlets-operator:${{ github.sha }}
+
