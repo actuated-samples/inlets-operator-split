@@ -49,6 +49,7 @@ jobs:
           outputs: "type=registry,push=true"
           platforms: linux/amd64
           file: ./Dockerfile
+          provenance: false
           context: .
           build-args: |
             Version=dev
@@ -100,6 +101,7 @@ jobs:
           platforms: linux/arm64
           file: ./Dockerfile
           context: .
+          provenance: false
           build-args: |
             Version=dev
             GitCommit=${{ github.sha }}
@@ -145,3 +147,7 @@ jobs:
         echo Pushing manifest
         docker manifest push ghcr.io/${{ env.REPO_OWNER }}/inlets-operator:${{ github.sha }}
 
+    - name: Adding summary
+      run: |
+        echo '### Published multi-arch image' >> $GITHUB_STEP_SUMMARY
+        echo "Image reference: \`ghcr.io/${{ env.REPO_OWNER }}/inlets-operator:${{ github.sha }}\`"
